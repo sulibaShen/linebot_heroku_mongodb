@@ -51,37 +51,15 @@ def callback():
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    msg = event.message.text
-    if '最新合作廠商' == msg:
-        message = imagemap_message()
-        line_bot_api.reply_message(event.reply_token, message)
-    elif '最新活動訊息' == msg:
-        message = buttons_message()
-        line_bot_api.reply_message(event.reply_token, message)
-    elif '註冊會員' == msg:
-        message = Confirm_Template()
-        line_bot_api.reply_message(event.reply_token, message)
-    elif '旋轉木馬' == msg:
-        message = Carousel_Template()
-        line_bot_api.reply_message(event.reply_token, message)
-    elif '圖片畫廊' == msg:
-        message = test()
-        line_bot_api.reply_message(event.reply_token, message)
-    elif '功能列表' == msg:
-        message = function_list()
-        line_bot_api.reply_message(event.reply_token, message)
-
-    #======MongoDB操作範例======
-
-    elif '@讀取' == msg:
+    if '@讀取' == msg:
         datas = read_many_datas()
         datas_len = len(datas)
-        message = TextSendMessage(text=f'資料數量，一共{datas_len}條')
+        message = TextSendMessage(process_message(text=f'資料數量，一共{datas_len}條'))
         line_bot_api.reply_message(event.reply_token, message)
 
     elif '@查詢' == msg:
         datas = col_find('events')
-        message = TextSendMessage(text=str(datas))
+        message = TextSendMessage(process_message(text=str(datas)))
         line_bot_api.reply_message(event.reply_token, message)
 
     elif '@對話紀錄' == msg:
@@ -96,12 +74,12 @@ def handle_message(event):
                 text_list.append(data)
             n+=1
         data_text = '\n'.join(text_list)
-        message = TextSendMessage(text=data_text[:5000])
+        message = TextSendMessage(process_message(text=data_text[:5000]))
         line_bot_api.reply_message(event.reply_token, message)
 
     elif '@刪除' == msg:
         text = delete_all_data()
-        message = TextSendMessage(text=text)
+        message = TextSendMessage(process_message(text=text))
         line_bot_api.reply_message(event.reply_token, message)
 
     #======MongoDB操作範例======
