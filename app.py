@@ -20,6 +20,7 @@ from mongodb_function import *
 import  os
 import tempfile, os
 import datetime
+import openai
 import time
 import traceback
 #======python的函數庫==========
@@ -52,39 +53,39 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     msg = event.message.text
-    if '最新合作廠商' in msg:
+    if '最新合作廠商' == msg:
         message = imagemap_message()
         line_bot_api.reply_message(event.reply_token, message)
-    elif '最新活動訊息' in msg:
+    elif '最新活動訊息' == msg:
         message = buttons_message()
         line_bot_api.reply_message(event.reply_token, message)
-    elif '註冊會員' in msg:
+    elif '註冊會員' == msg:
         message = Confirm_Template()
         line_bot_api.reply_message(event.reply_token, message)
-    elif '旋轉木馬' in msg:
+    elif '旋轉木馬' == msg:
         message = Carousel_Template()
         line_bot_api.reply_message(event.reply_token, message)
-    elif '圖片畫廊' in msg:
+    elif '圖片畫廊' == msg:
         message = test()
         line_bot_api.reply_message(event.reply_token, message)
-    elif '功能列表' in msg:
+    elif '功能列表' == msg:
         message = function_list()
         line_bot_api.reply_message(event.reply_token, message)
 
     #======MongoDB操作範例======
 
-    elif '@讀取' in msg:
+    elif '@讀取' == msg:
         datas = read_many_datas()
         datas_len = len(datas)
         message = TextSendMessage(text=f'資料數量，一共{datas_len}條')
         line_bot_api.reply_message(event.reply_token, message)
 
-    elif '@查詢' in msg:
+    elif '@查詢' == msg:
         datas = col_find('events')
         message = TextSendMessage(text=str(datas))
         line_bot_api.reply_message(event.reply_token, message)
 
-    elif '@對話紀錄' in msg:
+    elif '@對話紀錄' == msg:
         datas = read_chat_records()
         print(type(datas))
         n = 0
@@ -99,7 +100,7 @@ def handle_message(event):
         message = TextSendMessage(text=data_text[:5000])
         line_bot_api.reply_message(event.reply_token, message)
 
-    elif '@刪除' in msg:
+    elif '@刪除' == msg:
         text = delete_all_data()
         message = TextSendMessage(text=text)
         line_bot_api.reply_message(event.reply_token, message)
