@@ -22,6 +22,7 @@ import tempfile, os
 import datetime
 import time
 import traceback
+import json
 #======python的函數庫==========
 
 app = Flask(__name__)
@@ -38,7 +39,7 @@ def callback():
     signature = request.headers['X-Line-Signature']
     # get request body as text
     body = request.get_data(as_text=True)
-    write_one_data(eval(body.replace('false','False')))
+    write_one_data(json.loads(body))
     app.logger.info("Request body: " + body)
     # handle webhook body
     try:
