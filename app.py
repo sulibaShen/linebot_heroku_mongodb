@@ -51,6 +51,7 @@ def callback():
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    msg = event.message.text
     if '@讀取' == msg:
         datas = read_many_datas()
         datas_len = len(datas)
@@ -82,10 +83,8 @@ def handle_message(event):
         message = TextSendMessage(process_message(text=text))
         line_bot_api.reply_message(event.reply_token, message)
 
-    #======MongoDB操作範例======
-
     else:
-        message = TextSendMessage(text=msg)
+        message = TextSendMessage(process_message(text=msg))
         line_bot_api.reply_message(event.reply_token, message)
 
 @handler.add(PostbackEvent)
