@@ -20,7 +20,6 @@ from mongodb_function import *
 import  os
 import tempfile, os
 import datetime
-import openai
 import time
 import traceback
 #======python的函數庫==========
