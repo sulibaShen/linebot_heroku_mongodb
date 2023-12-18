@@ -58,7 +58,7 @@ def delete_all_data():
     col.delete_many({})
 
     if len(data_list)!=0:
-        return f"資料刪除完畢，共{datas_len}筆"
+        return "資料刪除完畢，共{datas_len}筆"
     else:
         return "資料刪除出錯"
 
