@@ -1,11 +1,15 @@
 import pymongo
 
+#======python的函數庫==========
+import  os
+#======python的函數庫==========
+
 # 要獲得mongodb網址，請至mongodb網站申請帳號進行資料庫建立，網址　https://www.mongodb.com/
 # 獲取的網址方法之範例如圖： https://i.imgur.com/HLCk99r.png
-client = pymongo.MongoClient("mongodb+srv://suliba0630:1qaz2wsx@cluster0.wxs2k1x.mongodb.net/?retryWrites=true&w=majority")
+client = pymongo.MongoClient(os.getenv('MONGOURI'))
 
 #第一個db的建立
-db = client['MongoClient']
+db = client['Cluster0']
 col = db['Database']
 
 #判斷key是否在指定的dictionary當中，若有則return True
